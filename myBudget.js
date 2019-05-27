@@ -43,9 +43,6 @@ var budgetController = (function(){
             //Add the item to the data structure
             data.allItems[type].push(newItem);
             return newItem;
-        },
-        testing: function(){
-            console.log(data.allItems);
         }
     }
 
@@ -58,7 +55,9 @@ var UIController = (function(){
         stringSel: ".add_select",
         stringDes: ".add_description",
         stringAmo: ".add_value",
-        stringBtn: ".add_button"
+        stringBtn: ".add_button",
+        expList: ".exp_list",
+        incList: ".inc_list"
     }
 
     return {
@@ -72,6 +71,31 @@ var UIController = (function(){
         },
         getDOMStrings: function(){
             return DOMStrings;
+        },
+        addListItem: function(obj, type){
+
+            var html, newHtml, element;
+            //Generate the html
+             if(type === "inc"){
+                element = document.querySelector(DOMStrings.incList);
+                html = '<div class="item clearfix" id="%id%"><div class="item__description">%description%</div>'+
+                '<div class="right clearfix"><div class="item__value">%value%</div>'+
+                '<div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>'+
+                '</div> </div></div>';
+             }else if(type === "exp"){
+                element = document.querySelector(DOMStrings.expList);
+                 html = '<div class="item clearfix" id="%id%"><div class="item__description">%description%</div>'+
+                 '<div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div>'+
+                 '<div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>'+
+                 '</div></div>';
+             }
+             //Replace placeholder text with actual input
+             newHtml = html.replace("%id%",obj.id);
+             newHtml = newHtml.replace("%description%",obj.description);
+             newHtml = newHtml.replace("%value%",obj.value);
+    
+             //Insert item into the UI
+            element.insertAdjacentHTML("beforeend",newHtml);
         }
     }
 })()
@@ -98,9 +122,9 @@ var Controller = (function(budCtrl,uiCtrl){
         //Get value from input fields
         var input = uiCtrl.getInput();
         //Add item to budget controller
-        budCtrl.createItem(input.type, input.description, input.value);
+        var newItem = budCtrl.createItem(input.type, input.description, input.value);
         //Display item in the UI
-
+        uiCtrl.addListItem(newItem, input.type);
         //Calculate new budget
 
         //Update the budget in the UI
