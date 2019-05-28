@@ -65,12 +65,25 @@ var UIController = (function(){
             return{
                 type: document.querySelector(DOMStrings.stringSel).value, // returns inc or exp
                 description: document.querySelector(DOMStrings.stringDes).value,
-                value: document.querySelector(DOMStrings.stringAmo).value,
+                value: parseFloat(document.querySelector(DOMStrings.stringAmo).value),
                 button: document.querySelector(DOMStrings.stringBtn).value
             }
         },
         getDOMStrings: function(){
             return DOMStrings;
+        },
+        resetValues:function(){
+            var fields, fieldsArr;
+
+           fields = document.querySelectorAll(DOMStrings.stringDes + "," + DOMStrings.stringAmo);
+
+           fieldsArr = Array.prototype.slice.call(fields);
+
+            fieldsArr.forEach( (cur) => {
+                cur.value = "";
+            });
+
+            fieldsArr[0].focus();
         },
         addListItem: function(obj, type){
 
@@ -117,18 +130,27 @@ var Controller = (function(budCtrl,uiCtrl){
         })
     }
 
+    function calcBudget(){
+        //Calculate new budget
+
+        //Return budget
+
+        //Update the budget in the UI
+    } 
+
     function updateCtrl(){
 
         //Get value from input fields
         var input = uiCtrl.getInput();
-        //Add item to budget controller
-        var newItem = budCtrl.createItem(input.type, input.description, input.value);
-        //Display item in the UI
-        uiCtrl.addListItem(newItem, input.type);
-        //Calculate new budget
 
-        //Update the budget in the UI
-
+        if(input.description !== "" && !isNaN(input.value) && input.value > 0){
+            //Add item to budget controller
+            var newItem = budCtrl.createItem(input.type, input.description, input.value);
+            //Display item in the UI
+            uiCtrl.addListItem(newItem, input.type);
+            //Reset input value
+            uiCtrl.resetValues();
+        }
     }
 
     return{
