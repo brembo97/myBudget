@@ -180,18 +180,18 @@ var Controller = (function(budCtrl,uiCtrl){
  
          var DOM = uiCtrl.getDOMStrings();
         
-        document.querySelector(DOM.stringBtn).addEventListener("click", updateCtrl);
+        document.querySelector(DOM.stringBtn).addEventListener("click", ctrlAddItem);
         document.querySelector(DOM.container).addEventListener("click",ctrDelItem);
 
         document.addEventListener("keypress", function(e){
         
             if(e.keyCode === 13 || e.which === 13){
-                updateCtrl();
+             ctrlAddItem();
             }
         })
     }
 
-    function calcBudget(){
+    var updateBudget = function(){
         //Calculate new budget
         budCtrl.calcBudget();
         //Return budget
@@ -200,7 +200,7 @@ var Controller = (function(budCtrl,uiCtrl){
         uiCtrl.updateBud(budget);
     } 
 
-    function updateCtrl(){
+    var ctrlAddItem = function(){
 
         //Get value from input fields
         var input = uiCtrl.getInput();
@@ -213,7 +213,7 @@ var Controller = (function(budCtrl,uiCtrl){
             //Reset input value
             uiCtrl.resetValues();
             //Caculate Budget
-            calcBudget()
+            updateBudget();
         }
     }
 
@@ -231,7 +231,7 @@ var Controller = (function(budCtrl,uiCtrl){
             //Delete item from the UI
             uiCtrl.deleteItem(itemID);
             //Recalculate and display budget
-            
+            updateBudget();
         }
     }
 
