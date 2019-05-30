@@ -88,7 +88,12 @@ var UIController = (function(){
         stringAmo: ".add_value",
         stringBtn: ".add_button",
         expList: ".exp_list",
-        incList: ".inc_list"
+        incList: ".inc_list",
+        budget: ".budget_amount",
+        budInc: ".budget_income_amount",
+        budExp: ".budget_expenses_amount",
+        budExpPer: ".budget_expenses_percentage",
+
     }
 
     return {
@@ -115,6 +120,17 @@ var UIController = (function(){
             });
 
             fieldsArr[0].focus();
+        },
+        updateBud: function(obj){
+            var sign;
+            obj.budget > 0 ? sign = " + " : sign = "";
+            document.querySelector(DOMStrings.budget).textContent = sign + obj.budget;
+            document.querySelector(DOMStrings.budInc).textContent = obj.totalInc;
+            document.querySelector(DOMStrings.budExp).textContent = obj.totalExp;
+            if(obj.percentage > 0 )
+                document.querySelector(DOMStrings.budExpPer).textContent = obj.percentage + "%";
+            else
+                document.querySelector(DOMStrings.budExpPer).textContent = "--";
         },
         addListItem: function(obj, type){
 
@@ -167,6 +183,7 @@ var Controller = (function(budCtrl,uiCtrl){
         //Return budget
         var budget = budCtrl.getBudget()
         //Update the budget in the UI
+        uiCtrl.updateBud(budget);
         console.log(budget);
     } 
 
