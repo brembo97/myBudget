@@ -22,7 +22,8 @@ body{
 }
 
 .right{float:right}
-
+.red-focus:focus{outline-color:#FF5049 !important;}
+.red{color:#FF5049 !important;}
 /************** TOP PART ***********/
 
 .top{
@@ -171,10 +172,10 @@ body{
 .container{
     width: 1000px;
     display:flex;
-    flex-direction:row;
-    justify-content: space-around;
-    align-content: space-around;
-
+    flex-flow:row wrap;
+    justify-content: flex-start ;
+    align-content: stretch;
+    align-items: stretch;
 }
 
 h2{
@@ -192,7 +193,7 @@ h2{
 .expenses{
     width:475px;
     color:#f64747;
-    margin:auto;
+    margin:60px auto;
 }
 
 .item {
